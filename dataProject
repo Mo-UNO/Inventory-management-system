@@ -105,11 +105,11 @@ private:
     string supplierName;
     int supplierCode;
     string address;
-    int telephone;
+    string telephone;
     string email;
 
 public:
-    supplier(string suppName, int code, string Address, int Telephone, string Email)
+    supplier(string suppName, int code, string Address, string Telephone, string Email)
     {
         supplierName = suppName;
         supplierCode = code;
@@ -134,7 +134,7 @@ public:
         address = addr;
     }
 
-    void setTelephone(int tel)
+    void setTelephone(string tel)
     {
         telephone = tel;
     }
@@ -160,7 +160,7 @@ public:
         return address;
     }
 
-    int getTelephone()
+    string getTelephone()
     {
         return telephone;
     }
@@ -228,7 +228,7 @@ int main()
     part1.putdata();
 
     // Creating a supplier object
-    supplier supplier1("ABC Supplier", 1234, "123 Main Street", 9876543210, "abc@supplier.com");
+    supplier supplier1("ABC Supplier", 1234, "123 Main Street", "01554223311", "abc@supplier.com");
 
     // Displaying supplier data
     cout << "\nSupplier Data:" << endl;
@@ -246,3 +246,4 @@ int main()
 
     
 }
+
