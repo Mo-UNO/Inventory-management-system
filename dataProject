@@ -1,0 +1,248 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class sparepart
+{
+private:
+    // data members.
+    string spareoartName;
+    int partNumber;
+    double cost;
+    string existingParts;
+
+public:
+    // Constructor to initialize spare part.
+    sparepart(string name, int id, double Cost, string exParts)
+    {
+        spareoartName = name;
+        partNumber = id;
+        cost = Cost;
+        existingParts = exParts;
+    }
+
+    // setter
+    void setsparepartName(string name)
+    {
+        spareoartName = name;
+    }
+    void setID(int id)
+    {
+        partNumber = id;
+    }
+
+    void setCost(double Cost)
+    {
+        cost = Cost;
+    }
+
+    void setID(string exParts)
+    {
+        existingParts = exParts;
+    }
+
+    // getter
+    string getsparepartName()
+    {
+        return spareoartName;
+    }
+    int getID()
+    {
+        return partNumber;
+    }
+
+    double getCost()
+    {
+        return cost;
+    }
+
+    string getExParts()
+    {
+        return existingParts;
+    }
+
+    // function to input spare part details.
+    void getdata()
+    {
+        cout << "Enter part name: ";
+        getline(cin, spareoartName);
+        cout << "Enter part number: ";
+        cin >> partNumber;
+        cout << "Enter cost: ";
+        cin >> cost;
+        cout << "Enter existing parts: ";
+        cin.ignore(); // To handle whitespace in input.
+        getline(cin, existingParts);
+    }
+
+    // Function to display spare part data but its name is put dk why.
+    void putdata()
+    {
+        cout << "Part Name: " << spareoartName << endl;
+        cout << "Part Number: " << partNumber << endl;
+        cout << "Cost: " << cost << endl;
+        cout << "Existing Parts: " << existingParts << endl;
+    }
+
+    // Function to modify spare part information.
+    void modifydata()
+    {
+        cout << "Modify part name: ";
+        cin >> spareoartName;
+        cout << "Modify part number: ";
+        cin >> partNumber;
+        cout << "Modify cost: ";
+        cin >> cost;
+        cout << "Modify existing parts: ";
+        cin.ignore();
+        getline(cin, existingParts);
+    }
+};
+
+class supplier
+{
+private:
+    string supplierName;
+    int supplierCode;
+    string address;
+    int telephone;
+    string email;
+
+public:
+    supplier(string suppName, int code, string Address, int Telephone, string Email)
+    {
+        supplierName = suppName;
+        supplierCode = code;
+        address = Address;
+        telephone = Telephone;
+        email = Email;
+    }
+
+    // Setter
+    void setSupplierName(string name)
+    {
+        supplierName = name;
+    }
+
+    void setSupplierCode(int code)
+    {
+        supplierCode = code;
+    }
+
+    void setAddress(string addr)
+    {
+        address = addr;
+    }
+
+    void setTelephone(int tel)
+    {
+        telephone = tel;
+    }
+
+    void setEmail(string mail)
+    {
+        email = mail;
+    }
+
+    // Getter
+    string getSupplierName()
+    {
+        return supplierName;
+    }
+
+    int getSupplierCode()
+    {
+        return supplierCode;
+    }
+
+    string getAddress()
+    {
+        return address;
+    }
+
+    int getTelephone()
+    {
+        return telephone;
+    }
+
+    string getEmail()
+    {
+        return email;
+    }
+    
+    void getdata() {
+        cout << "Enter supplier name: ";
+        cin >> supplierName;
+        cout << "Enter supplier code: ";
+        cin >> supplierCode;
+        cout << "Enter address: ";
+        cin.ignore();
+        getline(cin, address);
+        cout << "Enter telephone: ";
+        cin >> telephone;
+        cout << "Enter email: ";
+        cin >> email;
+    }
+
+    
+    void putdata() {
+        cout << "Supplier Name: " << supplierName << endl;
+        cout << "Supplier Code: " << supplierCode << endl;
+        cout << "Address: " << address << endl;
+        cout << "Telephone: " << telephone << endl;
+        cout << "Email: " << email << endl;
+    }
+
+    
+    void modifydata() {
+        cout << "Modify supplier name: ";
+        cin >> supplierName;
+        cout << "Modify supplier code: ";
+        cin >> supplierCode;
+        cout << "Modify address: ";
+        cin.ignore();
+        getline(cin, address);
+        cout << "Modify telephone: ";
+        cin >> telephone;
+        cout << "Modify email: ";
+        cin >> email;
+    }
+
+};
+
+int main()
+{
+     // Creating a sparepart object
+    sparepart part1("Engine", 12345, 2500.0, "Piston, Gasket, Spark Plug");
+
+    // Displaying sparepart data
+    cout << "Spare Part Data:" << endl;
+    part1.putdata();
+
+    // Modifying sparepart data
+    cout << "\nModify Spare Part Data:" << endl;
+    part1.modifydata();
+
+    // Displaying modified sparepart data
+    cout << "\nModified Spare Part Data:" << endl;
+    part1.putdata();
+
+    // Creating a supplier object
+    supplier supplier1("ABC Supplier", 1234, "123 Main Street", 9876543210, "abc@supplier.com");
+
+    // Displaying supplier data
+    cout << "\nSupplier Data:" << endl;
+    supplier1.putdata();
+
+    // Modifying supplier data
+    cout << "\nModify Supplier Data:" << endl;
+    supplier1.modifydata();
+
+    // Displaying modified supplier data
+    cout << "\nModified Supplier Data:" << endl;
+    supplier1.putdata();
+
+    return 0;
+
+    
+}
