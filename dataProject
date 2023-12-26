@@ -169,8 +169,9 @@ public:
     {
         return email;
     }
-    
-    void getdata() {
+
+    void getdata()
+    {
         cout << "Enter supplier name: ";
         cin >> supplierName;
         cout << "Enter supplier code: ";
@@ -184,8 +185,8 @@ public:
         cin >> email;
     }
 
-    
-    void putdata() {
+    void putdata()
+    {
         cout << "Supplier Name: " << supplierName << endl;
         cout << "Supplier Code: " << supplierCode << endl;
         cout << "Address: " << address << endl;
@@ -193,8 +194,8 @@ public:
         cout << "Email: " << email << endl;
     }
 
-    
-    void modifydata() {
+    void modifydata()
+    {
         cout << "Modify supplier name: ";
         cin >> supplierName;
         cout << "Modify supplier code: ";
@@ -207,12 +208,337 @@ public:
         cout << "Modify email: ";
         cin >> email;
     }
-
 };
+// nodes for linked list.
+template <class T>
+class suppNode
+{
+public:
+    supplier *suppPtr;
+    suppNode<T> *suppNext;
+};
+
+template <class T>
+class partNode
+{
+public:
+    sparepart *suppPtr;
+    partNode<T> *partNext;
+};
+
+// tree nodes.
+template <class T>
+class sparePartTreeNode
+{
+public:
+    T *data;
+    sparePartTreeNode<T> *left;
+    sparePartTreeNode<T> *right;
+    partNode<T> *sparePartList; // Linked list pointer for spare parts
+    suppNode<T> *supplierList;  // Linked list pointer for suppliers
+
+    // Constructor
+    sparePartTreeNode(int k, T *d) : data(d), left(nullptr), right(nullptr), sparePartList(nullptr), supplierList(nullptr) {}
+
+    // order function
+    void Inorder(sparePartTreeNode<T> *r)
+    {
+        if (r == nullptr)
+            return;
+        Inorder(r->left);
+        cout << r->data << "\t";
+        Inorder(r->right);
+    }
+    // insert function
+    sparePartTreeNode<T> *insertNode(sparePartTreeNode<T> *root, int key, T *data)
+    {
+        if (root == nullptr)
+            return new sparePartTreeNode<T>(key, data);
+
+        if (key < root->key)
+            root->left = insertNode(root->left, key, data);
+        else if (key > root->key)
+            root->right = insertNode(root->right, key, data);
+
+        return root;
+    }
+    // search function
+    sparePartTreeNode<T> *searchNode(sparePartTreeNode<T> *root, int key)
+    {
+        if (root == nullptr || root->key == key)
+            return root;
+
+        if (key < root->key)
+            return searchNode(root->left, key);
+        else
+            return searchNode(root->right, key);
+    }
+    // delete function
+    sparePartTreeNode<T> *deleteNode(sparePartTreeNode<T> *root, int key)
+    {
+        if (root == nullptr)
+            return root;
+
+        if (key < root->key)
+            root->left = deleteNode(root->left, key);
+        else if (key > root->key)
+            root->right = deleteNode(root->right, key);
+        else
+        {
+            if (root->left == nullptr)
+            {
+                sparePartTreeNode<T> *temp = root->right;
+                delete root;
+                return temp;
+            }
+            else if (root->right == nullptr)
+            {
+                sparePartTreeNode<T> *temp = root->left;
+                delete root;
+                return temp;
+            }
+
+            sparePartTreeNode<T> *temp = minValueNode(root->right);
+            root->key = temp->key;
+            root->right = deleteNode(root->right, temp->key);
+        }
+        return root;
+    }
+     void modifydata(sparePartTreeNode<T> *r, int sparePartcode) {
+       sparePartTreeNode<T> *temp = r;
+
+        while (temp != NULL) {
+            if (temp->data.getID() == sparePartcode) {
+                cout << "Supplier found. Enter the name of the attribute to edit:" << endl;
+                cout << "1. Supplier Name" << endl;
+                cout << "2. Address" << endl;
+                cout << "3. Telephone" << endl;
+                cout << "4. Email" << endl;
+
+                int choice;
+                cout << "Enter your choice: ";
+                cin >> choice;
+
+                switch (choice) {
+                    case 1: {
+                        string newName;
+                        cout << "Enter new Supplier Name: ";
+                        cin.ignore();
+                        getline(cin, newName);
+                        temp->data.setSupplierName(newName);
+                        break;
+                    }
+
+                    case 2: {
+                        string newAddress;
+                        cout << "Enter new Address: ";
+                        cin.ignore();
+                        getline(cin, newAddress);
+                        temp->data.setAddress(newAddress);
+                        break;
+                    }
+
+                    case 3: {
+                        string newTelephone;
+                        cout << "Enter new Telephone: ";
+                        cin.ignore();
+                        getline(cin, newTelephone);
+                        temp->data.setTelephone(newTelephone);
+                        break;
+                    }
+
+                    case 4: {
+                        string newEmail;
+                        cout << "Enter new Email: ";
+                        cin.ignore();
+                        getline(cin, newEmail);
+                        temp->data.setEmail(newEmail);
+                        break;
+                    }
+
+                    default:
+                        cout << "Invalid choice. No changes made." << endl;
+                        return;
+                }
+
+                cout << "Supplier information edited successfully." << endl;
+                return;
+            }
+
+            if (temp->data.getID() > sparePartcode) {
+                temp = temp->left;
+            } else {
+                temp = temp->right;
+            }
+        }
+
+        cout << "Supplier not found in the tree." << endl;
+    }
+
+    void modifydata(int sparePartcode) {
+        modifydata(sparePartList, sparePartcode);
+    }
+};
+
+template <class T>
+class supplierTreeNode
+{
+public:
+    T *data;
+    supplierTreeNode<T> *left;
+    supplierTreeNode<T> *right;
+    partNode<T> *sparePartList; // Linked list pointer for spare parts
+    suppNode<T> *supplierList;  // Linked list pointer for suppliers
+
+    // Constructor
+    supplierTreeNode(int k, T *d) : data(d), left(nullptr), right(nullptr), sparePartList(nullptr), supplierList(nullptr) {}
+
+    void Inorder(supplierTreeNode<T> *r)
+    {
+        if (r == nullptr)
+            return;
+        Inorder(r->left);
+        cout << r->data << "\t";
+        Inorder(r->right);
+    }
+    // insert function
+    supplierTreeNode<T> *insertNode(supplierTreeNode<T> *root, int key, T *data)
+    {
+        if (root == nullptr)
+            return new supplierTreeNode<T>(key, data);
+
+        if (key < root->key)
+            root->left = insertNode(root->left, key, data);
+        else if (key > root->key)
+            root->right = insertNode(root->right, key, data);
+
+        return root;
+    }
+    // search function
+    supplierTreeNode<T> *searchNode(supplierTreeNode<T> *root, int key)
+    {
+        if (root == nullptr || root->key == key)
+            return root;
+
+        if (key < root->key)
+            return searchNode(root->left, key);
+        else
+            return searchNode(root->right, key);
+    }
+    // delete function
+    supplierTreeNode<T> *deleteNode(supplierTreeNode<T> *root, int key)
+    {
+        if (root == nullptr)
+            return root;
+
+        if (key < root->key)
+            root->left = deleteNode(root->left, key);
+        else if (key > root->key)
+            root->right = deleteNode(root->right, key);
+        else
+        {
+            if (root->left == nullptr)
+            {
+                supplierTreeNode<T> *temp = root->right;
+                delete root;
+                return temp;
+            }
+            else if (root->right == nullptr)
+            {
+                supplierTreeNode<T> *temp = root->left;
+                delete root;
+                return temp;
+            }
+
+            supplierTreeNode<T> *temp = minValueNode(root->right);
+            root->key = temp->key;
+            root->right = deleteNode(root->right, temp->key);
+        }
+        return root;
+    }
+    
+    void modifydata(supplierTreeNode<T> *r, int supplierCode) {
+        supplierTreeNode<T> *temp = r;
+
+        while (temp != NULL) {
+            if (temp->data.getSupplierCode() == supplierCode) {
+                cout << "Supplier found. Enter the name of the attribute to edit:" << endl;
+                cout << "1. Supplier Name" << endl;
+                cout << "2. Address" << endl;
+                cout << "3. Telephone" << endl;
+                cout << "4. Email" << endl;
+
+                int choice;
+                cout << "Enter your choice: ";
+                cin >> choice;
+
+                switch (choice) {
+                    case 1: {
+                        string newName;
+                        cout << "Enter new Supplier Name: ";
+                        cin.ignore();
+                        getline(cin, newName);
+                        temp->data.setSupplierName(newName);
+                        break;
+                    }
+
+                    case 2: {
+                        string newAddress;
+                        cout << "Enter new Address: ";
+                        cin.ignore();
+                        getline(cin, newAddress);
+                        temp->data.setAddress(newAddress);
+                        break;
+                    }
+
+                    case 3: {
+                        string newTelephone;
+                        cout << "Enter new Telephone: ";
+                        cin.ignore();
+                        getline(cin, newTelephone);
+                        temp->data.setTelephone(newTelephone);
+                        break;
+                    }
+
+                    case 4: {
+                        string newEmail;
+                        cout << "Enter new Email: ";
+                        cin.ignore();
+                        getline(cin, newEmail);
+                        temp->data.setEmail(newEmail);
+                        break;
+                    }
+
+                    default:
+                        cout << "Invalid choice. No changes made." << endl;
+                        return;
+                }
+
+                cout << "Supplier information edited successfully." << endl;
+                return;
+            }
+
+            if (temp->data.getSupplierCode() > supplierCode) {
+                temp = temp->left;
+            } else {
+                temp = temp->right;
+            }
+        }
+
+        cout << "Supplier not found in the tree." << endl;
+    }
+
+    void modifydata(int supplierCode) {
+        modifydata(supplierList, supplierCode);
+    }
+};
+
+
+
 
 int main()
 {
-     // Creating a sparepart object
+    // Creating a sparepart object
     sparepart part1("Engine", 12345, 2500.0, "Piston, Gasket, Spark Plug");
 
     // Displaying sparepart data
@@ -243,7 +569,4 @@ int main()
     supplier1.putdata();
 
     return 0;
-
-    
 }
-
