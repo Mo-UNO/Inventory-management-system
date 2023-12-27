@@ -36,7 +36,7 @@ public:
         cost = Cost;
     }
 
-    void setID(string exParts)
+    void setExistParts(string exParts)
     {
         existingParts = exParts;
     }
@@ -304,7 +304,7 @@ public:
         }
         return root;
     }
-     void modifydata(sparePartTreeNode<T> *r, int sparePartcode) {
+     void modifydataSparPart(sparePartTreeNode<T> *r, int sparePartcode) {
        sparePartTreeNode<T> *temp = r;
 
         while (temp != NULL) {
@@ -322,37 +322,27 @@ public:
                 switch (choice) {
                     case 1: {
                         string newName;
-                        cout << "Enter new Supplier Name: ";
+                        cout << "Enter new sparepart Name: ";
                         cin.ignore();
                         getline(cin, newName);
-                        temp->data.setSupplierName(newName);
+                        temp->data.setsparepartName(newName);
                         break;
                     }
 
                     case 2: {
-                        string newAddress;
-                        cout << "Enter new Address: ";
+                        string newExist;
+                        cout << "Enter new existing part: ";
                         cin.ignore();
-                        getline(cin, newAddress);
-                        temp->data.setAddress(newAddress);
+                        getline(cin, newExist);
+                        temp->data.setExistParts(newExist);
                         break;
                     }
 
                     case 3: {
-                        string newTelephone;
-                        cout << "Enter new Telephone: ";
-                        cin.ignore();
-                        getline(cin, newTelephone);
-                        temp->data.setTelephone(newTelephone);
-                        break;
-                    }
-
-                    case 4: {
-                        string newEmail;
-                        cout << "Enter new Email: ";
-                        cin.ignore();
-                        getline(cin, newEmail);
-                        temp->data.setEmail(newEmail);
+                        double newCost;
+                        cout << "Enter new cost: ";
+                        cin >> newCost;
+                        temp->data.setCost(newCost);
                         break;
                     }
 
@@ -379,6 +369,7 @@ public:
         modifydata(sparePartList, sparePartcode);
     }
 };
+
 
 template <class T>
 class supplierTreeNode
@@ -456,8 +447,8 @@ public:
         }
         return root;
     }
-    
-    void modifydata(supplierTreeNode<T> *r, int supplierCode) {
+    // modify function
+    void modifysupplierData(supplierTreeNode<T> *r, int supplierCode) {
         supplierTreeNode<T> *temp = r;
 
         while (temp != NULL) {
@@ -541,7 +532,6 @@ int main()
     // Creating a sparepart object
     sparepart part1("Engine", 12345, 2500.0, "Piston, Gasket, Spark Plug");
 
-    // Displaying sparepart data
     cout << "Spare Part Data:" << endl;
     part1.putdata();
 
