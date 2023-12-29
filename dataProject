@@ -523,6 +523,129 @@ public:
         modifydata(supplierList, supplierCode);
     }
 };
+template <class T>
+class Node {
+public:
+    T data;
+    Node<T> *next;
+    Node(T &value) : data(value), next(NULL) 
+    {
+        data = value;
+        next = NULL;
+    }
+};
+//QUEUE
+template <class T>
+class SparePartQueue {
+public:
+    Node<T> *Front;
+    Node<T> *Rear;
+
+    SparePartQueue()
+    {
+        Front == NULL;
+        Rear == NULL;
+    }
+//is the queue is empty 
+    bool isEmpty()
+    {
+        return Front == NULL;
+    }
+//is found
+    bool isFound(T &element)
+    {
+        Node<T> *temp = Front;
+        while(temp!=NULL)
+        {
+            if(temp->data == element)
+                return true;
+            temp =temp->next;
+        }
+        return false;
+    }
+// Queue countner
+    int CountQueue()
+    {
+        int counter=0;
+        Node<T> *temp= Front;
+        while(temp!=NULL)
+        {
+            counter++;
+            temp=temp->next;
+        }
+        return counter;
+    }
+// enqueue
+    void enqueue(T &item)
+    {
+        Node<T> *newnode= new Node<T>(item);
+        if(isEmpty())
+        {
+            Front = Rear =newnode;
+        }
+        else
+        {
+            Rear->next- newnode;
+            Rear=newnode;
+        }
+    }
+// dequeue
+    T dequeue()
+    {
+        T delete_value;
+        if(isEmpty())
+        {
+            cout<<"Queue is Empty\n"<<endl;
+            delete_value=T();
+        }
+        else if(Front == Rear)
+        {
+            delete_value= Front->data;
+            delete Front;
+            Front = Rear = NULL;
+        }
+        else
+        {
+            Node<T> *delptr = Front;
+            Front = Front->next;
+            delete_value = delptr->data;
+            delete delptr;
+        }
+        return delete_value;
+    }
+// display queue
+    void Display_Queue()
+    {
+        if(isEmpty())
+        {
+            cout<<"Queue is Empty\n"<<endl;
+        }
+        else 
+        {
+            while(!isEmpty())
+            {
+                cout<<dequeue()<<endl;
+            }
+        
+        }
+    }
+    T getQueueFront()
+    {
+        return Front->data;
+    }
+    T getQueueRear()
+    {
+        return Rear->data;
+    }
+// clear the queue
+    void clearQueue()
+    {
+        while(!isEmpty())
+        {
+            dequeue();
+        }
+    }
+};
 
 
 
