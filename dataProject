@@ -523,6 +523,7 @@ public:
         modifydata(supplierList, supplierCode);
     }
 };
+// node for queue
 template <class T>
 class Node {
 public:
