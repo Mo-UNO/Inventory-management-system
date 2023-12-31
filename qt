@@ -1,0 +1,434 @@
+#include <QApplication>
+#include <QWidget>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QMessageBox>
+#include <QLabel>
+#include <QInputDialog>
+#include <vector>
+#include <QDebug>
+
+using namespace std;
+class SparePart {
+public:
+    int partNumber;
+    QString partName;
+    int cost;
+    QString existingParts;
+};
+
+class Supplier {
+public:
+    QString supplierName;
+    int supplierCode;
+    QString address;
+    double telephone;
+    QString email;
+};
+
+class SpareParts : public QWidget {
+    Q_OBJECT
+
+public:
+    vector<SparePart> spareParts;
+    vector<Supplier> suppliers;
+    vector<QString> operationHistory;
+
+    SpareParts(QWidget* parent = nullptr) : QWidget(parent) {
+        setupUi();
+    }
+
+private slots:
+    void buttonClicked(int option) {
+        switch (option) {
+        case 1:
+            addSparePart();
+            break;
+        case 2:
+            addSupplier();
+            break;
+        case 3:
+            displaySpareParts();
+            break;
+        case 4:
+            displaySuppliers();
+            break;
+        case 5:
+            editSparePart();
+            break;
+        case 6:
+            editSupplier();
+            break;
+        case 7:
+            searchSparePart();
+            break;
+        case 8:
+            searchSupplier();
+            break;
+        case 9:
+            deleteSparePart();
+            break;
+        case 10:
+            deleteSupplier();
+            break;
+
+        case 11:
+            displayHistory1("User Stack");
+            break;
+        case 12:
+            displayHistory("User Queue");
+            break;
+        case 0:
+            QApplication::quit();
+            break;
+        default:
+            break;
+        }
+    }
+
+private:
+    QLabel* messageLabel;
+
+    void setupUi() {
+        QVBoxLayout* layout = new QVBoxLayout(this);
+
+        // Add QLabel to display messages
+        messageLabel = new QLabel(this);
+        QLabel* enterChoiceLabel = new QLabel("Please enter a choice:", this);
+        layout->addWidget(enterChoiceLabel);
+        layout->addWidget(messageLabel);
+
+        for (int i = 1; i <= 12; ++i) {
+            QPushButton* button = new QPushButton(QString::number(i) + ". " + getOptionText(i), this);
+            connect(button, &QPushButton::clicked, [this, i]() { buttonClicked(i); });
+            layout->addWidget(button);
+        }
+
+
+
+
+        setStyleSheet("background-color: brown;");
+        setLayout(layout);
+        setWindowTitle("Spare Parts Manager");
+    }
+
+    QString getOptionText(int option) {
+        switch (option) {
+        case 1: return "Add Spare Part";
+        case 2: return "Add Supplier";
+        case 3: return "Display Spare Parts";
+        case 4: return "Display Suppliers";
+        case 5: return "Modify Spare Part";
+        case 6: return "Modify Supplier";
+        case 7: return "Search Spare Part";
+        case 8: return "Search Supplier";
+        case 9: return "Delete Spare Part";
+        case 10: return "Delete Supplier";
+        case 11: return "Display User Stack History";
+        case 12: return "Display User Queue History";
+        case 0: return "Exit";
+        default: return "";
+        }
+    }
+    void addSparePart() {
+        bool ok;
+        SparePart newSparePart;
+
+        newSparePart.partNumber = QInputDialog::getInt(this, "Enter Part Number", "Part Number:", 1, 1, 1000, 1, &ok);
+        if (!ok) return;
+
+        newSparePart.partName = QInputDialog::getText(this, "Enter Part Name", "Part Name:", QLineEdit::Normal, "", &ok);
+        if (!ok) return;
+
+        newSparePart.cost = QInputDialog::getInt(this, "Enter Cost", "Cost:", 0, 0, 100000, 1, &ok);
+        if (!ok) return;
+
+        newSparePart.existingParts = QInputDialog::getText(this, "Enter Existing Parts", "Existing Parts:", QLineEdit::Normal, "", &ok);
+        if (!ok) return;
+
+        spareParts.push_back(newSparePart);
+        addToHistory("SparePart added!!");
+
+        showMessage1("Spare Part Added!!");
+    }
+    void addSupplier() {
+        bool ok;
+        Supplier newSupplier;
+
+        newSupplier.supplierName = QInputDialog::getText(this, "Enter Supplier Name", "Supplier Name:", QLineEdit::Normal, "", &ok);
+        if (!ok) return;
+
+        newSupplier.supplierCode = QInputDialog::getInt(this, "Enter Supplier Code", "Supplier Code:", 1, 1, 1000, 1, &ok);
+        if (!ok) return;
+
+        newSupplier.address = QInputDialog::getText(this, "Enter Address", "Address:", QLineEdit::Normal, "", &ok);
+        if (!ok) return;
+
+        newSupplier.telephone = QInputDialog::getDouble(this, "Enter Telephone", "Telephone:", 0, -999999999, 999999999, 2, &ok);
+        if (!ok) return;
+
+        newSupplier.email = QInputDialog::getText(this, "Enter Email", "Email:", QLineEdit::Normal, "", &ok);
+        if (!ok) return;
+
+        suppliers.push_back(newSupplier);
+        addToHistory("Supplier added");
+
+        showMessage("Supplier Added");
+    }
+    void displaySpareParts() {
+        if (spareParts.empty()) {
+            showMessage("No spare parts added yet.");
+            return;
+        }
+
+        QString message = "Spare Parts:\n";
+        for (const auto& sparePart : spareParts) {
+            message += QString("Part Number: %1\nPart Name: %2\nCost: %3\nExisting Parts: %4\n\n")
+                           .arg(sparePart.partNumber)
+                           .arg(sparePart.partName)
+                           .arg(sparePart.cost)
+                           .arg(sparePart.existingParts);
+        }
+
+        showMessage(message);
+    }
+    void displaySuppliers() {
+        if (suppliers.empty()) {
+            showMessage("No suppliers added yet.");
+            return;
+        }
+
+        QString message = "Suppliers:\n";
+        for (const auto& supplier : suppliers) {
+            message += QString("Supplier Name: %1\nSupplier Code: %2\nAddress: %3\nTelephone: %4\nEmail: %5\n\n")
+                           .arg(supplier.supplierName)
+                           .arg(supplier.supplierCode)
+                           .arg(supplier.address)
+                           .arg(supplier.telephone)
+                           .arg(supplier.email);
+        }
+
+        showMessage(message);
+    }
+    void editSparePart() {
+        if (spareParts.empty()) {
+            showMessage("No spare parts added yet. Cannot edit.");
+            return;
+        }
+
+        bool ok;
+        int partNumberToEdit = QInputDialog::getInt(this, "Enter Part Number", "Part Number to Edit:", 1, 1, 1000, 1, &ok);
+        if (!ok) return;
+
+        bool found = false;
+        for (auto& sparePart : spareParts) {
+            if (sparePart.partNumber == partNumberToEdit) {
+
+                sparePart.partName = QInputDialog::getText(this, "Enter Part Name", "New Part Name:", QLineEdit::Normal, sparePart.partName, &ok);
+                if (!ok) return;
+
+                sparePart.cost = QInputDialog::getInt(this, "Enter Cost", "New Cost:", sparePart.cost, 0, 100000, 1, &ok);
+                if (!ok) return;
+
+                sparePart.existingParts = QInputDialog::getText(this, "Enter Existing Parts", "New Existing Parts:", QLineEdit::Normal, sparePart.existingParts, &ok);
+                if (!ok) return;
+
+                showMessage("Spare Part Edited");
+                addToHistory("SparePart edited");
+
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            showMessage("Spare Part not found. Cannot edit.");
+        }
+    }
+
+    void editSupplier() {
+        if (suppliers.empty()) {
+            showMessage("No suppliers added yet. Cannot edit.");
+            return;
+        }
+
+        bool ok;
+        int supplierCodeToEdit = QInputDialog::getInt(this, "Enter Supplier Code", "Supplier Code to Edit:", 1, 1, 1000, 1, &ok);
+        if (!ok) return;
+
+        bool found = false;
+        for (auto& supplier : suppliers) {
+            if (supplier.supplierCode == supplierCodeToEdit) {
+
+                supplier.supplierName = QInputDialog::getText(this, "Enter Supplier Name", "New Supplier Name:", QLineEdit::Normal, supplier.supplierName, &ok);
+                if (!ok) return;
+
+                supplier.address = QInputDialog::getText(this, "Enter Address", "New Address:", QLineEdit::Normal, supplier.address, &ok);
+                if (!ok) return;
+
+                supplier.telephone = QInputDialog::getDouble(this, "Enter Telephone", "New Telephone:", supplier.telephone, -999999999, 999999999, 2, &ok);
+                if (!ok) return;
+
+                supplier.email = QInputDialog::getText(this, "Enter Email", "New Email:", QLineEdit::Normal, supplier.email, &ok);
+                if (!ok) return;
+
+                showMessage("Supplier Edited");
+                addToHistory("Supplier Edited");
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            showMessage("Supplier not found. Cannot edit.");
+        }
+    }
+    void searchSparePart() {
+        if (spareParts.empty()) {
+            showMessage("No spare parts added yet. Cannot search.");
+            return;
+        }
+
+        bool ok;
+        int partNumberToSearch = QInputDialog::getInt(this, "Enter Part Number", "Part Number to Search:", 1, 1, 1000, 1, &ok);
+        if (!ok) return;
+
+        for (const auto& sparePart : spareParts) {
+            if (sparePart.partNumber == partNumberToSearch) {
+
+                QString message = QString("Spare Part Found:\nPart Number: %1\nPart Name: %2\nCost: %3\nExisting Parts: %4")
+                                      .arg(sparePart.partNumber)
+                                      .arg(sparePart.partName)
+                                      .arg(sparePart.cost)
+                                      .arg(sparePart.existingParts);
+                showMessage(message);
+                return;
+            }
+        }
+
+        showMessage("Spare Part not found.");
+    }
+
+    void searchSupplier() {
+        if (suppliers.empty()) {
+            showMessage("No suppliers added yet. Cannot search.");
+            return;
+        }
+
+        bool ok;
+        int supplierCodeToSearch = QInputDialog::getInt(this, "Enter Supplier Code", "Supplier Code to Search:", 1, 1, 1000, 1, &ok);
+        if (!ok) return;
+
+        for (const auto& supplier : suppliers) {
+            if (supplier.supplierCode == supplierCodeToSearch) {
+
+                QString message = QString("Supplier Found:\nSupplier Name: %1\nSupplier Code: %2\nAddress: %3\nTelephone: %4\nEmail: %5")
+                                      .arg(supplier.supplierName)
+                                      .arg(supplier.supplierCode)
+                                      .arg(supplier.address)
+                                      .arg(supplier.telephone)
+                                      .arg(supplier.email);
+                showMessage(message);
+                return;
+            }
+        }
+
+        showMessage("Supplier not found.");
+    }
+    void deleteSparePart() {
+        if (spareParts.empty()) {
+            showMessage("No spare parts added yet. Cannot delete.");
+            return;
+        }
+
+        bool ok;
+        int partNumberToDelete = QInputDialog::getInt(this, "Enter Part Number", "Part Number to Delete:", 1, 1, 1000, 1, &ok);
+        if (!ok) return;
+
+        auto it = std::remove_if(spareParts.begin(), spareParts.end(), [partNumberToDelete](const SparePart& sparePart) {
+            return sparePart.partNumber == partNumberToDelete;
+        });
+
+        if (it != spareParts.end()) {
+            spareParts.erase(it, spareParts.end());
+            showMessage("Spare Part Deleted");
+            addToHistory("Spare Part Deleted");
+        }
+        else {
+            showMessage("Spare Part not found. Cannot delete.");
+        }
+    }
+
+    void deleteSupplier() {
+        if (suppliers.empty()) {
+            showMessage("No suppliers added yet. Cannot delete.");
+            return;
+        }
+
+        bool ok;
+        int supplierCodeToDelete = QInputDialog::getInt(this, "Enter Supplier Code", "Supplier Code to Delete:", 1, 1, 1000, 1, &ok);
+        if (!ok) return;
+
+        auto it = std::remove_if(suppliers.begin(), suppliers.end(), [supplierCodeToDelete](const Supplier& supplier) {
+            return supplier.supplierCode == supplierCodeToDelete;
+        });
+
+        if (it != suppliers.end()) {
+            suppliers.erase(it, suppliers.end());
+            showMessage("Supplier Deleted");
+            addToHistory("Supplier Deleted");
+        }
+        else {
+            showMessage("Supplier not found. Cannot delete.");
+        }
+    }
+    void addToHistory(const QString& operation) {
+        operationHistory.push_back(operation);
+    }
+
+    void displayHistory(const QString& title) {
+        if (operationHistory.empty()) {
+            showMessage("No history available.");
+            return;
+        }
+
+        QString message = title + " History:\n";
+        for (const auto& operation : operationHistory) {
+            message += operation + "\n";
+        }
+
+        showMessage(message);
+    }
+    void displayHistory1(const QString& title) {
+        if (operationHistory.empty()) {
+            showMessage("No history available.");
+            return;
+        }
+
+        QString message = title + " History:\n";
+        for (auto it = operationHistory.rbegin(); it != operationHistory.rend(); ++it) {
+            message += *it + "\n";
+        }
+
+        showMessage(message);
+    }
+
+
+    void showMessage1(const QString& message) {
+        QMessageBox::information(this, "Information", message);
+    }
+    void showMessage(const QString& message) {
+        QMessageBox::information(this, "Option Selected", message);
+    }
+};
+
+int main(int argc, char* argv[]) {
+    QApplication app(argc, argv);
+
+    SpareParts manager;
+    manager.show();
+
+    return app.exec();
+}
+
+#include "main.moc"
