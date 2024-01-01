@@ -68,15 +68,70 @@ public:
     // function to input spare part details.
     void getdata()
     {
-        cout << "Enter part name: ";
-        getline(cin, spareoartName);
-        cout << "Enter part number: ";
-        cin >> partNumber;
-        cout << "Enter cost: ";
-        cin >> cost;
-        cout << "Enter existing parts: ";
-        cin.ignore(); // To handle whitespace in input.
-        getline(cin, existingParts);
+        while (true)
+        {
+            cout << "Enter Part Name: ";
+            cin >> spareoartName;
+
+            if (cin.fail())
+            {
+                cin.clear();                                         // Clear the fail state
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard the invalid input
+                cout << "Invalid input. Please enter a valid integer." << endl;
+            }
+            else
+            {
+                break;
+            }
+        }
+        while (true)
+        {
+            cout << "Enter Part Number: ";
+            cin >> partNumber;
+
+            if (cin.fail())
+            {
+                cin.clear();                                         // Clear the fail state
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard the invalid input
+                cout << "Invalid input. Please enter a valid integer." << endl;
+            }
+            else
+            {
+                break;
+            }
+        }
+        while (true)
+        {
+            cout << "Enter Cost: ";
+            cin >> cost;
+
+            if (cin.fail())
+            {
+                cin.clear();                                         // Clear the fail state
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard the invalid input
+                cout << "Invalid input. Please enter a valid integer." << endl;
+            }
+            else
+            {
+                break;
+            }
+        }
+        while (true)
+        {
+            cout << "Enter Existing Parts: ";
+            cin >> existingParts;
+
+            if (cin.fail())
+            {
+                cin.clear();                                         // Clear the fail state
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard the invalid input
+                cout << "Invalid input. Please enter a valid integer." << endl;
+            }
+            else
+            {
+                break;
+            }
+        }
     }
 
     // Function to display spare part data but its name is put dk why.
@@ -86,20 +141,76 @@ public:
         cout << "Part Number: " << partNumber << endl;
         cout << "Cost: " << cost << endl;
         cout << "Existing Parts: " << existingParts << endl;
+        cout << "----------------------------------" << endl;
     }
 
     // Function to modify spare part information.
     void modifydata()
     {
-        cout << "Modify part name: ";
-        cin >> spareoartName;
-        cout << "Modify part number: ";
-        cin >> partNumber;
-        cout << "Modify cost: ";
-        cin >> cost;
-        cout << "Modify existing parts: ";
-        cin.ignore();
-        getline(cin, existingParts);
+        while (true)
+        {
+            cout << "Enter Part Name: ";
+            cin >> spareoartName;
+
+            if (cin.fail())
+            {
+                cin.clear();                                         // Clear the fail state
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard the invalid input
+                cout << "Invalid input. Please enter a valid integer." << endl;
+            }
+            else
+            {
+                break;
+            }
+        }
+        while (true)
+        {
+            cout << "Enter Part Number: ";
+            cin >> partNumber;
+
+            if (cin.fail())
+            {
+                cin.clear();                                         // Clear the fail state
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard the invalid input
+                cout << "Invalid input. Please enter a valid integer." << endl;
+            }
+            else
+            {
+                break;
+            }
+        }
+        while (true)
+        {
+            cout << "Enter Cost: ";
+            cin >> cost;
+
+            if (cin.fail())
+            {
+                cin.clear();                                         // Clear the fail state
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard the invalid input
+                cout << "Invalid input. Please enter a valid integer." << endl;
+            }
+            else
+            {
+                break;
+            }
+        }
+        while (true)
+        {
+            cout << "Enter Existing Parts: ";
+            cin >> existingParts;
+
+            if (cin.fail())
+            {
+                cin.clear();                                         // Clear the fail state
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard the invalid input
+                cout << "Invalid input. Please enter a valid integer." << endl;
+            }
+            else
+            {
+                break;
+            }
+        }
     }
 };
 
@@ -328,66 +439,72 @@ public:
     }
 };
 
-
 template <class T>
-class Node{
+class Node
+{
 public:
-
     T data;
-    Node<T>* next;
-    Node<T>* right;
-    Node<T>* left;
+    Node<T> *next;
+    Node<T> *right;
+    Node<T> *left;
 
-    Node( T& value) : data(value), next(NULL), right(NULL), left(NULL) {}
+    Node(T &value) : data(value), next(NULL), right(NULL), left(NULL) {}
 
-
-    //Setter and Getter
+    // Setter and Getter
     T getdata() { return data; }
-    void setdata( T Value) { data = Value; }
+    void setdata(T Value) { data = Value; }
 
-    Node<T>* getnext() { return next; }
-    void setnext( Node<T>* nextnode) { next = nextnode; }
+    Node<T> *getnext() { return next; }
+    void setnext(Node<T> *nextnode) { next = nextnode; }
 
-    Node<T>* getLeft() const { return left; }
-    void setLeft(Node<T>* leftNode) { left = leftNode; }
+    Node<T> *getLeft() const { return left; }
+    void setLeft(Node<T> *leftNode) { left = leftNode; }
 
-    Node<T>* getRight() const { return right; }
-    void setRight(Node<T>* rightNode) { right = rightNode; }
-
+    Node<T> *getRight() const { return right; }
+    void setRight(Node<T> *rightNode) { right = rightNode; }
 };
 
 // tree nodes.
 template <class T>
-class SparePartBinaryTree {
+class SparePartBinaryTree
+{
 private:
-    Node<T>* root;
+    Node<T> *root;
 
     // Recursive function to insert a spare part into the binary tree
-    Node<T>* insert(Node<T>* node, T& value) {
-        if (node == NULL) {
+    Node<T> *insert(Node<T> *node, T &value)
+    {
+        if (node == NULL)
+        {
             return new Node<T>(value);
         }
 
-        if (value.getpartNumber() < node->data.getpartNumber()) {
+        if (value.getpartNumber() < node->data.getpartNumber())
+        {
             node->left = insert(node->left, value);
         }
-        else if (value.getpartNumber() > node->data.getpartNumber()) {
+        else if (value.getpartNumber() > node->data.getpartNumber())
+        {
             node->right = insert(node->right, value);
         }
-        else{
-            cout<< "Duplicate is not allowed. Part Number: "<< value.getpartNumber() <<" already exists."<<endl;
+        else
+        {
+            cout << "Duplicate is not allowed. Part Number: " << value.getpartNumber() << " already exists." << endl;
         }
 
         return node;
     }
 
     // Recursive function to search for a spare part by part number
-    Node<T>* search(Node<T>* node, int partNumber) {
-        if (node == NULL || node->data.getpartNumber() == partNumber) {
+    Node<T> *search(Node<T> *node, int partNumber)
+    {
+        if (node == NULL || node->data.getpartNumber() == partNumber)
+        {
             return node;
         }
 
-        if (node->data.getpartNumber() < partNumber) {
+        if (node->data.getpartNumber() < partNumber)
+        {
             return search(node->left, partNumber);
         }
 
@@ -395,38 +512,48 @@ private:
     }
 
     // Recursive function to find the node with the minimum part number
-    Node<T>* findMin(Node<T>* node) {
-        while (node->left != NULL) {
+    Node<T> *findMin(Node<T> *node)
+    {
+        while (node->left != NULL)
+        {
             node = node->left;
         }
         return node;
     }
 
     // Recursive function to delete a spare part by part number
-    Node<T>* deleteNode(Node<T>* root, int partNumber) {
-        if (root == NULL) {
+    Node<T> *deleteNode(Node<T> *root, int partNumber)
+    {
+        if (root == NULL)
+        {
             return root;
         }
 
-        if (partNumber < root->data.getpartNumber()) {
+        if (partNumber < root->data.getpartNumber())
+        {
             root->left = deleteNode(root->left, partNumber);
         }
 
-        else if (partNumber > root->data.getpartNumber()) {
+        else if (partNumber > root->data.getpartNumber())
+        {
             root->right = deleteNode(root->right, partNumber);
-        } else {
-            if (root->left == NULL) {
-                Node<T>* temp = root->right;
+        }
+        else
+        {
+            if (root->left == NULL)
+            {
+                Node<T> *temp = root->right;
                 delete root;
                 return temp;
             }
-            else if (root->right == NULL) {
-                Node<T>* temp = root->left;
+            else if (root->right == NULL)
+            {
+                Node<T> *temp = root->left;
                 delete root;
                 return temp;
             }
 
-            Node<T>* temp = findMin(root->right);
+            Node<T> *temp = findMin(root->right);
             root->data = temp->data;
             root->right = deleteNode(root->right, temp->data.getpartNumber());
         }
@@ -434,8 +561,10 @@ private:
     }
 
     // Recursive function to perform in-order traversal
-    void inOrderTraversal(Node<T>* node) {
-        if (node != NULL) {
+    void inOrderTraversal(Node<T> *node)
+    {
+        if (node != NULL)
+        {
             inOrderTraversal(node->left);
             node->data.putdata();
             inOrderTraversal(node->right);
@@ -445,173 +574,75 @@ private:
 public:
     SparePartBinaryTree() : root(NULL) {}
 
-
     // Public function to insert a spare part into the binary tree
-    void insert( T& value) {
+    void insert(T &value)
+    {
         root = insert(root, value);
     }
 
     // Public function to search for a spare part by part number
-    Node<T>* search(int partNumber) {
+    Node<T> *search(int partNumber)
+    {
         return search(root, partNumber);
     }
 
     // Public function to delete a spare part by part number
-    void deleteValue(int partNumber) {
+    void deleteValue(int partNumber)
+    {
         root = deleteNode(root, partNumber);
     }
 
     // Public function to display all spare parts using in-order traversal
-    void display() {
+    void display()
+    {
         inOrderTraversal(root);
-        if (root == NULL) {
-            cout<<"there is nothing to display."<<endl;
+        if (root == NULL)
+        {
+            cout << "there is nothing to display." << endl;
         }
     }
 };
+
 template <class T>
-class SparePartBinaryTree1 {
+class SupplierBinaryTree
+{
 private:
-    Node<T>* root;
-
-    // Recursive function to insert a spare part into the binary tree
-    Node<T>* insert(Node<T>* node, T& value) {
-        if (node == NULL) {
-            return new Node<T>(value);
-        }
-
-        if (value.getpartNumber() < node->data.getpartNumber()) {
-            node->left = insert(node->left, value);
-        }
-        else if (value.getpartNumber() > node->data.getpartNumber()) {
-            node->right = insert(node->right, value);
-        }
-        else{
-            cout<< "Duplicate is not allowed. Part Number: "<< value.getpartNumber() <<" already exists."<<endl;
-        }
-
-        return node;
-    }
-
-    // Recursive function to search for a spare part by part number
-    Node<T>* search(Node<T>* node, int partNumber) {
-        if (node == NULL || node->data.getpartNumber() == partNumber) {
-            return node;
-        }
-
-        if (node->data.getpartNumber() < partNumber) {
-            return search(node->left, partNumber);
-        }
-
-        return search(node->right, partNumber);
-    }
-
-    // Recursive function to find the node with the minimum part number
-    Node<T>* findMin(Node<T>* node) {
-        while (node->left != NULL) {
-            node = node->left;
-        }
-        return node;
-    }
-
-    // Recursive function to delete a spare part by part number
-    Node<T>* deleteNode(Node<T>* root, int partNumber) {
-        if (root == NULL) {
-            return root;
-        }
-
-        if (partNumber < root->data.getpartNumber()) {
-            root->left = deleteNode(root->left, partNumber);
-        }
-
-        else if (partNumber > root->data.getpartNumber()) {
-            root->right = deleteNode(root->right, partNumber);
-        } else {
-            if (root->left == NULL) {
-                Node<T>* temp = root->right;
-                delete root;
-                return temp;
-            }
-            else if (root->right == NULL) {
-                Node<T>* temp = root->left;
-                delete root;
-                return temp;
-            }
-
-            Node<T>* temp = findMin(root->right);
-            root->data = temp->data;
-            root->right = deleteNode(root->right, temp->data.getpartNumber());
-        }
-        return root;
-    }
-
-    // Recursive function to perform in-order traversal
-    void inOrderTraversal(Node<T>* node) {
-        if (node != NULL) {
-            inOrderTraversal(node->left);
-            node->data.putdata();
-            inOrderTraversal(node->right);
-        }
-    }
-
-public:
-    SparePartBinaryTree1() : root(NULL) {}
-
-
-    // Public function to insert a spare part into the binary tree
-    void insert( T& value) {
-        root = insert(root, value);
-    }
-
-    // Public function to search for a spare part by part number
-    Node<T>* search(int partNumber) {
-        return search(root, partNumber);
-    }
-
-    // Public function to delete a spare part by part number
-    void deleteValue(int partNumber) {
-        root = deleteNode(root, partNumber);
-    }
-
-    // Public function to display all spare parts using in-order traversal
-    void display() {
-        inOrderTraversal(root);
-        if (root == NULL) {
-            cout<<"there is nothing to display."<<endl;
-        }
-    }
-};
-template <class T>
-class SupplierBinaryTree {
-private:
-    Node<T>* root;
+    Node<T> *root;
 
     // Recursive function to insert a supplier into the binary tree
-    Node<T>* insert(Node<T>* node, T& value) {
-        if (node == NULL) {
+    Node<T> *insert(Node<T> *node, T &value)
+    {
+        if (node == NULL)
+        {
             return new Node<T>(value);
         }
 
-        if (value.getsupplierCode() < node->data.getsupplierCode()) {
+        if (value.getsupplierCode() < node->data.getsupplierCode())
+        {
             node->left = insert(node->left, value);
         }
-        else if (value.getsupplierCode() > node->data.getsupplierCode()) {
+        else if (value.getsupplierCode() > node->data.getsupplierCode())
+        {
             node->right = insert(node->right, value);
         }
-        else{
-            cout<< "Duplicate is not allowed. Supplier Code: "<< value.getsupplierCode() <<"already exists."<<endl;
+        else
+        {
+            cout << "Duplicate is not allowed. Supplier Code: " << value.getsupplierCode() << "already exists." << endl;
         }
 
         return node;
     }
 
     // Recursive function to search for a supplier by supplier code
-    Node<T>* search(Node<T>* node, int supplierCode) {
-        if (node == NULL || node->data.getsupplierCode() == supplierCode) {
+    Node<T> *search(Node<T> *node, int supplierCode)
+    {
+        if (node == NULL || node->data.getsupplierCode() == supplierCode)
+        {
             return node;
         }
 
-        if (supplierCode < node->data.getsupplierCode()) {
+        if (supplierCode < node->data.getsupplierCode())
+        {
             return search(node->left, supplierCode);
         }
 
@@ -619,35 +650,47 @@ private:
     }
 
     // Recursive function to find the node with the minimum supplier code
-    Node<T>* findMin(Node<T>* node) {
-        while (node->left != NULL) {
+    Node<T> *findMin(Node<T> *node)
+    {
+        while (node->left != NULL)
+        {
             node = node->left;
         }
         return node;
     }
 
     // Recursive function to delete a supplier by supplier code
-    Node<T>* deleteNode(Node<T>* root, int supplierCode) {
-        if (root == NULL) {
+    Node<T> *deleteNode(Node<T> *root, int supplierCode)
+    {
+        if (root == NULL)
+        {
             return root;
         }
 
-        if (supplierCode < root->data.getsupplierCode()) {
+        if (supplierCode < root->data.getsupplierCode())
+        {
             root->left = deleteNode(root->left, supplierCode);
-        } else if (supplierCode > root->data.getsupplierCode()) {
+        }
+        else if (supplierCode > root->data.getsupplierCode())
+        {
             root->right = deleteNode(root->right, supplierCode);
-        } else {
-            if (root->left == NULL) {
-                Node<T>* temp = root->right;
+        }
+        else
+        {
+            if (root->left == NULL)
+            {
+                Node<T> *temp = root->right;
                 delete root;
                 return temp;
-            } else if (root->right == NULL) {
-                Node<T>* temp = root->left;
+            }
+            else if (root->right == NULL)
+            {
+                Node<T> *temp = root->left;
                 delete root;
                 return temp;
             }
 
-            Node<T>* temp = findMin(root->right);
+            Node<T> *temp = findMin(root->right);
             root->data = temp->data;
             root->right = deleteNode(root->right, temp->data.getsupplierCode());
         }
@@ -655,8 +698,10 @@ private:
     }
 
     // Recursive function to perform in-order traversal
-    void inOrderTraversal(Node<T>* node) {
-        if (node != NULL) {
+    void inOrderTraversal(Node<T> *node)
+    {
+        if (node != NULL)
+        {
             inOrderTraversal(node->left);
             node->data.putdata(); // Assuming Supplier has a display function
             inOrderTraversal(node->right);
@@ -667,189 +712,300 @@ public:
     SupplierBinaryTree() : root(NULL) {}
 
     // Public function to insert a supplier into the binary tree
-    void insert(T& value) {
+    void insert(T &value)
+    {
         root = insert(root, value);
     }
 
     // Public function to search for a supplier by supplier code
-    Node<T>* search(int SupplierCode) {
+    Node<T> *search(int SupplierCode)
+    {
         return search(root, SupplierCode);
     }
 
     // Public function to delete a supplier by supplier code
-    void deleteValue(int supplierCode) {
+    void deleteValue(int supplierCode)
+    {
         root = deleteNode(root, supplierCode);
     }
 
     // Public function to display all suppliers using in-order traversal
-    void display() {
+    void display()
+    {
         inOrderTraversal(root);
-        if(root == NULL){
-            cout<<"there is nothing to display."<<endl;
+        if (root == NULL)
+        {
+            cout << "there is nothing to display." << endl;
         }
     }
 };
 
+// stack
+class userstack
+{
+private:
+    stack<string> history;
+
+public:
+    void pushvalue(string &value)
+    {
+        history.push(value);
+    }
+
+    void popvalue()
+    {
+        if (!history.empty())
+        {
+            history.pop();
+        }
+        else
+        {
+            cout << "the stack is empty. there is nothing to pop" << endl;
+        }
+    }
+
+    void displaystack()
+    {
+        cout << "User History: " << endl;
+        stack<string> temp = history;
+        while (!temp.empty())
+        {
+            cout << temp.top() << endl;
+            temp.pop();
+        }
+    }
+};
 
 // QUEUE
-template <class T>
-class SparePartQueue
+class userqueue
 {
-public:
-    Node<T> *Front;
-    Node<T> *Rear;
+private:
+    queue<string> history;
 
-    SparePartQueue()
+public:
+    void pushvalue(string &value)
     {
-        Front == NULL;
-        Rear == NULL;
+        history.push(value);
     }
-    // is the queue is empty
-    bool isEmpty()
+
+    void popvalue()
     {
-        return Front == NULL;
-    }
-    // is found
-    bool isFound(T &element)
-    {
-        Node<T> *temp = Front;
-        while (temp != NULL)
+        if (!history.empty())
         {
-            if (temp->data == element)
-                return true;
-            temp = temp->next;
-        }
-        return false;
-    }
-    // Queue countner
-    int CountQueue()
-    {
-        int counter = 0;
-        Node<T> *temp = Front;
-        while (temp != NULL)
-        {
-            counter++;
-            temp = temp->next;
-        }
-        return counter;
-    }
-    // enqueue
-    void enqueue(T &item)
-    {
-        Node<T> *newnode = new Node<T>(item);
-        if (isEmpty())
-        {
-            Front = Rear = newnode;
+            history.pop();
         }
         else
         {
-            Rear->next - newnode;
-            Rear = newnode;
+            cout << "the queue is empty. there is nothing to pop" << endl;
         }
     }
-    // dequeue
-    T dequeue()
+
+    void displayqueue()
     {
-        T delete_value;
-        if (isEmpty())
+        cout << "Queue History: " << endl;
+        queue<string> temp = history;
+        while (!temp.empty())
         {
-            cout << "Queue is Empty\n"
-                 << endl;
-            delete_value = T();
-        }
-        else if (Front == Rear)
-        {
-            delete_value = Front->data;
-            delete Front;
-            Front = Rear = NULL;
-        }
-        else
-        {
-            Node<T> *delptr = Front;
-            Front = Front->next;
-            delete_value = delptr->data;
-            delete delptr;
-        }
-        return delete_value;
-    }
-    // display queue
-    void Display_Queue()
-    {
-        if (isEmpty())
-        {
-            cout << "Queue is Empty\n"
-                 << endl;
-        }
-        else
-        {
-            while (!isEmpty())
-            {
-                cout << dequeue() << endl;
-            }
-        }
-    }
-    T getQueueFront()
-    {
-        return Front->data;
-    }
-    T getQueueRear()
-    {
-        return Rear->data;
-    }
-    // clear the queue
-    void clearQueue()
-    {
-        while (!isEmpty())
-        {
-            dequeue();
+            cout << temp.front() << endl;
+            temp.pop();
         }
     }
 };
+
 
 int main()
 {
-    sparepart part1("Engine", 1001, 500.0, "Bolts, Gaskets");
-    sparepart part2("Tires", 1002, 200.0, "Rims, Tubes");
-    sparepart part3("Headlights", 1003, 150.0, "Bulbs, Wires");
+    SparePartBinaryTree<sparepart> sparePartTree;
+    SupplierBinaryTree<supplier> supplierTree;
+    userstack stackHistory;
+    userqueue queueHistory;
 
-    supplier supplier1("ABC Suppliers", 2001, "123 Main St", "123-456-7890", "abc@suppliers.com");
-    supplier supplier2("XYZ Suppliers", 2002, "456 Oak St", "987-654-3210", "xyz@suppliers.com");
+    int choice;
+    while (true)
+    {
+        cout << "-----------------------------------------------------------------------------------------------" << endl;
+        cout << "Inventory Management System: ONLINE." << endl;
+        cout << "1. Add Spare Part" << endl;
+        cout << "2. Add Supplier" << endl;
+        cout << "3. Display Spare Parts" << endl;
+        cout << "4. Display Suppliers" << endl;
+        cout << "5. Modify a Spare Part" << endl;
+        cout << "6. Modify a Supplier" << endl;
+        cout << "7. Search for Spare Parts" << endl;
+        cout << "8. Search for Supplier" << endl;
+        cout << "9. Delete a Spare Part" << endl;
+        cout << "10. Delete a Supplier" << endl;
+        cout << "11. Display User Stack History" << endl;
+        cout << "12. Display User Queue History" << endl;
+        cout << "0. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.clear();
+        cin.ignore(10000, '\n');
+        cout << "-----------------------------------------------------------------------------------------------" << endl;
+        switch (choice)
+        {
+        case 1:
+        {
+            sparepart newSparePart("NAME", 1, 1, "EXIST");
+            newSparePart.getdata();
+            sparePartTree.insert(newSparePart);
+            string action = "Added Spare Part";
+            stackHistory.pushvalue(action);
+            queueHistory.pushvalue(action);
 
-    // Creating binary trees for spare parts and suppliers
-    SparePartBinaryTree<sparepart> partsTree;
-    partsTree.insert(part1);
-    partsTree.insert(part2);
-    partsTree.insert(part3);
+            break;
+        }
+        case 2:
+        {
+            supplier newSupplier("NAME", 1, "ADDRESS", "TELEPHONE", "EMAIL");
+            newSupplier.getdata();
+            supplierTree.insert(newSupplier);
+            string action = "Added Supplier";
+            stackHistory.pushvalue(action);
+            queueHistory.pushvalue(action);
 
-    SupplierBinaryTree<supplier> suppliersTree;
-    suppliersTree.insert(supplier1);
-    suppliersTree.insert(supplier2);
+            break;
+        }
+        case 3:
+            sparePartTree.display();
+            break;
+        case 4:
+            supplierTree.display();
+            break;
+        case 5:
+        {
+            cout << "Enter part number to modify: ";
+            int code;
+            cin >> code;
 
-    // Displaying all spare parts and suppliers
-    cout << "All Spare Parts:" << endl;
-    partsTree.display();
+            Node<sparepart> *sparenode = sparePartTree.search(code);
+            if (sparenode != NULL)
+            {
+                sparepart sparePartToModify = sparenode->getdata();
+                sparePartToModify.modifydata();
+                sparePartTree.deleteValue(code);
+                sparePartTree.insert(sparePartToModify);
+                string action = "Modified Spare Part";
+                stackHistory.pushvalue(action);
+                queueHistory.pushvalue(action);
+            }
+            else
+            {
+                cout << "Code not found." << endl;
+            }
+            break;
+        }
+        case 6:
+        {
+            cout << "Enter supplier code to modify: ";
+            int code;
+            cin >> code;
 
-    cout << "All Suppliers:" << endl;
-    suppliersTree.display();
+            Node<supplier> *suppliernode = supplierTree.search(code);
 
-    // Searching for a spare part and a supplier by their respective IDs
-    int searchPartNumber = 1002;
-    Node<sparepart>* foundPart = partsTree.search(searchPartNumber);
-    if (foundPart != NULL) {
-        cout << "Found Part: ";
-        foundPart->data.putdata();
-    } else {
-        cout << "Part with ID " << searchPartNumber << " not found." << endl;
+            if (suppliernode != NULL)
+            {
+                supplier supplierToModify = suppliernode->getdata();
+                supplierToModify.modifydata();
+                supplierTree.deleteValue(code);
+                supplierTree.insert(supplierToModify);
+                string action = "Modified Supplier";
+                stackHistory.pushvalue(action);
+                queueHistory.pushvalue(action);
+            }
+            else
+            {
+                cout << "Code not found." << endl;
+            }
+            break;
+        }
+        case 7:
+        {
+            cout << "Enter part number to search: ";
+            int code;
+            cin >> code;
+
+            if (sparePartTree.search(code))
+            {
+                cout << "Spare Part Found:" << endl;
+                sparePartTree.search(code)->data.putdata();
+            }
+            else
+            {
+                cout << "Code not found." << endl;
+            }
+            break;
+        }
+
+        case 8:
+        {
+            cout << "Enter supplier code to search: ";
+            int code;
+            cin >> code;
+
+            if (supplierTree.search(code))
+            {
+                cout << "Supplier Found:" << endl;
+                supplierTree.search(code)->data.putdata();
+            }
+            else
+            {
+                cout << "Code not found." << endl;
+            }
+            break;
+        }
+        case 9:
+        {
+            cout << "Enter part number to delete: ";
+            int code;
+            cin >> code;
+
+            if (sparePartTree.search(code))
+            {
+                sparePartTree.deleteValue(code);
+                string action = "Deleted Spare Part";
+                stackHistory.pushvalue(action);
+                queueHistory.pushvalue(action);
+            }
+
+            else
+            {
+                cout << "Code not found." << endl;
+            }
+            break;
+        }
+        case 10:
+        {
+            cout << "Enter supplier code to delete: ";
+            int code;
+            cin >> code;
+
+            if (supplierTree.search(code))
+            {
+                supplierTree.deleteValue(code);
+                string action = "Deleted Supplier";
+                stackHistory.pushvalue(action);
+                queueHistory.pushvalue(action);
+            }
+            else
+            {
+                cout << "Code not found." << endl;
+            }
+            break;
+        }
+        case 11:
+            stackHistory.displaystack();
+            break;
+        case 12:
+            queueHistory.displayqueue();
+            break;
+        case 0:
+            cout << "Exiting program." << endl;
+            return 0;
+        default:
+            cout << "Invalid choice. Please enter a valid option." << endl;
+        }
     }
-
-    int searchSupplierCode = 2001;
-    Node<supplier>* foundSupplier = suppliersTree.search(searchSupplierCode);
-    if (foundSupplier != NULL) {
-        cout << "Found Supplier: ";
-        foundSupplier->data.putdata();
-    } else {
-        cout << "Supplier with Code " << searchSupplierCode << " not found." << endl;
-    }
-
     return 0;
 }
